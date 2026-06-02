@@ -26,18 +26,12 @@ const products = [
   description="鸿尚纺织专业针织面料研发、生产、定制。OEM/ODM，支持来样来料加工。主营方格面料、罗纹布、提花布等，客户遍及海内外。"
   canonicalUrl="https://hongstex.shop/zh/"
   alternateUrl="https://hongstex.shop/en/"
+  transparentNav={true}
 >
   <!-- Hero -->
-  <section class="relative h-[580px] flex items-center justify-center overflow-hidden">
+  <h1 class="sr-only">{t.home.heroTitle}</h1>
+  <section class="relative h-[580px] overflow-hidden -mt-16">
     <Image src={heroImg} alt="鸿尚纺织生产基地" class="absolute inset-0 w-full h-full object-cover" width={1400} height={580} />
-    <div class="absolute inset-0 bg-primary/65" />
-    <div class="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">{t.home.heroTitle}</h1>
-      <p class="text-xl text-gray-200 mb-8">{t.home.heroSubtitle}</p>
-      <a href="/zh/contact/" class="bg-accent hover:bg-[#b8963e] text-white px-8 py-3 rounded font-medium transition-colors inline-block">
-        {t.home.heroCta}
-      </a>
-    </div>
   </section>
 
   <!-- Products preview -->

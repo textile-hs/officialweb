@@ -6,9 +6,10 @@ interface Props {
   t: Translations;
   lang: 'zh' | 'en';
   alternateUrl: string;
+  transparentNav?: boolean;
 }
 
-const { t, lang } = Astro.props;
+const { t, lang, transparentNav = false } = Astro.props;
 const base = `/${lang}`;
 const path = Astro.url.pathname;
 const altLang = lang === 'zh' ? 'en' : 'zh';
@@ -28,11 +29,17 @@ function isActive(href: string): boolean {
 }
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-primary text-white shadow-md">
+<nav
+  id="main-nav"
+  data-transparent={transparentNav ? 'true' : 'false'}
+  class={`fixed top-0 left-0 right-0 z-50 text-white transition-[background-color,box-shadow] duration-300 ${transparentNav ? 'bg-transparent' : 'bg-primary shadow-md'}`}
+>
   <div class="max-w-content mx-auto px-6 flex items-center justify-between h-16">
     <a href={`${base}/`} class="font-bold text-base tracking-wide shrink-0">
-      鸿尚纺织
-      <span class="hidden sm:inline text-xs font-normal text-gray-400 ml-1">HONGSHANG TEXTILE</span>
+      <span id="nav-logo" class={`transition-opacity duration-300 ${transparentNav ? 'opacity-0' : ''}`}>
+        鸿尚纺织
+        <span class="hidden sm:inline text-xs font-normal text-gray-400 ml-1">HONGSHANG TEXTILE</span>
+      </span>
     </a>
 
     <!-- Desktop links -->
@@ -83,4 +90,19 @@ function isActive(href: string): boolean {
   const toggle = document.getElementById('nav-toggle');
   const menu = document.getElementById('nav-menu');
   toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+
+  const nav = document.getElementById('main-nav') as HTMLElement;
+  const logo = document.getElementById('nav-logo') as HTMLElement;
+
+  if (nav?.dataset.transparent === 'true') {
+    function updateNav() {
+      const scrolled = window.scrollY > 300;
+      nav.classList.toggle('bg-primary', scrolled);
+      nav.classList.toggle('shadow-md', scrolled);
+      nav.classList.toggle('bg-transparent', !scrolled);
+      logo?.classList.toggle('opacity-0', !scrolled);
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  }
 </script>

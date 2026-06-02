@@ -11,9 +11,10 @@ interface Props {
   description: string;
   canonicalUrl: string;
   alternateUrl: string;
+  transparentNav?: boolean;
 }
 
-const { t, lang, title, description, canonicalUrl, alternateUrl } = Astro.props;
+const { t, lang, title, description, canonicalUrl, alternateUrl, transparentNav = false } = Astro.props;
 const alternateLang = lang === 'zh' ? 'en' : 'zh';
 const bcp47: Record<string, string> = { zh: 'zh-CN', en: 'en-US' };
 const xDefault = new URL('/zh/', Astro.site).href;
@@ -38,7 +39,7 @@ const xDefault = new URL('/zh/', Astro.site).href;
     />
   </head>
   <body class="font-sans text-[#333333] bg-white">
-    <Nav t={t} lang={lang} alternateUrl={alternateUrl} />
+    <Nav t={t} lang={lang} alternateUrl={alternateUrl} transparentNav={transparentNav} />
     <main class="pt-16">
       <slot />
     </main>
