@@ -4,9 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Bilingual (zh/en) marketing website for **佛山市鸿尚纺织有限公司** (Foshan Hongshang Textile Co., Ltd.), a knitted fabric manufacturer. Repo: `git@github.com:textile-hs/officialweb.git`.
+Bilingual (zh/en) marketing website for **佛山市鸿尚纺织有限公司** (Foshan Hongshang Textile Co., Ltd.), a knitted fabric manufacturer based in Foshan, Guangdong. Repo: `git@github.com:textile-hs/officialweb.git`.
 
 **Status: Live at `https://www.hongstex.shop`**
+
+Five pages: 首页/Home · 公司介绍/About · 产品展示/Products · 生产环境/Factory · 联系我们/Contact — each in both `/zh/` and `/en/`.
+
+---
 
 ## Tech Stack
 
@@ -15,67 +19,118 @@ Bilingual (zh/en) marketing website for **佛山市鸿尚纺织有限公司** (F
 | Framework | Astro v4 (SSG, static output) |
 | Styling | Tailwind CSS v3 (pinned — peer dep of @astrojs/tailwind@6) |
 | i18n | Astro built-in, explicit `/zh/` and `/en/` prefixes |
-| Hosting | Cloudflare Pages (auto-deploys on `git push`) |
+| Hosting | Cloudflare Pages (auto-deploys on `git push` to `main`) |
 | Contact form email | Cloudflare Worker (`emailworker.hongshangadmin.workers.dev`) |
-| SEO | @astrojs/sitemap v3.2.1 |
+| SEO | @astrojs/sitemap v3.2.1 (downgraded from 3.7.3 — v3.7.3 requires Astro v5) |
 
 ## Commands
 
 ```bash
 npm run dev      # local dev server
 npm run build    # production build → dist/
-npm test         # Vitest unit tests (functions/lib/validate.test.ts)
+npm test         # Vitest unit tests (8 tests in functions/lib/validate.test.ts)
 ```
+
+---
 
 ## Architecture
 
 - `src/pages/zh/` and `src/pages/en/` — one file per page per locale
-- `src/i18n/zh.ts` and `src/i18n/en.ts` — all UI strings (typed via `src/i18n/types.ts`)
-- `src/layouts/Layout.astro` — HTML shell with Nav, Footer, hreflang, Google Fonts
-- `src/assets/images/` — optimized images (Astro `<Image>` component, auto-converts to WebP)
-- `functions/` — Cloudflare Pages Functions (language redirect only; contact form moved to Worker)
-- `functions/lib/validate.ts` — pure contact form validation (no CF runtime deps)
+- `src/i18n/zh.ts` and `src/i18n/en.ts` — all UI strings, typed via `src/i18n/types.ts`
+- `src/layouts/Layout.astro` — HTML shell: fonts, meta/SEO, Nav, Footer. Accepts `transparentNav?: boolean` prop (used on homepage only)
+- `src/components/Nav.astro` — fixed top nav with scroll-aware transparency (see below)
+- `src/assets/images/` — imported images, Astro `<Image>` auto-converts to WebP
+- `public/favicon.png` — site favicon (100×100 dark background with white H mark)
+- `functions/index.ts` — Pages Function: reads `Accept-Language`, 302-redirects `/` to `/zh/` or `/en/`
+- `functions/contact.ts` — Pages Function stub (unused for email; kept for reference)
+- `functions/lib/validate.ts` — pure contact form validation, no CF runtime deps
+
+---
+
+## Visual Design
+
+| Role | Value |
+|------|-------|
+| Primary (nav, headings) | `#1a1a2e` |
+| Accent (CTA, hover) | `#c9a84c` (warm gold) |
+| Background | `#ffffff` |
+| Section alt background | `#f8f8f8` |
+| Body text | `#333333` |
+
+Fonts: Noto Sans SC (Chinese) + Inter (English), loaded via Google Fonts in Layout.
+
+---
+
+## Nav Scroll Behavior (homepage only)
+
+`Nav.astro` accepts `transparentNav?: boolean`. When true (homepage):
+- At top (scrollY ≤ 300px): nav background transparent, logo text `opacity-0` (hidden)
+- After 300px scroll: nav transitions to `bg-primary shadow-md`, logo text fades in
+- JS in Nav.astro `<script>` handles toggling; checks `data-transparent="true"` attribute to activate
+
+On all other pages `transparentNav` is false (default) — nav is always solid `bg-primary`.
+
+The language switcher link uses a relative path computed from `Astro.url.pathname` (NOT a hardcoded absolute URL). This ensures it works on any domain (`.dev`, staging, production).
+
+---
+
+## Homepage Hero
+
+- Image: `src/assets/images/factory-hero.jpg` (source: `others/首页展示.png`, 1681×935px PNG)
+- Displayed at natural aspect ratio (`w-full h-auto`) — no `object-cover` cropping
+- Section has `-mt-16` so image extends behind the transparent nav (full-bleed from viewport top)
+- No text overlay on the hero image
+
+---
 
 ## Contact Form Email Setup
 
-The contact form posts to a **standalone Cloudflare Worker** (not a Pages Function). Reason: the Cloudflare Pages project's Bindings panel does not offer an "Email Service" binding option, whereas the Worker's Bindings panel does. This may be a Cloudflare Pages limitation or a dashboard configuration issue.
+The contact form POSTs to a **standalone Cloudflare Worker**, not to the Pages Function. Reason: the Cloudflare Pages project's Bindings panel does not offer an Email Service binding option, whereas the Worker's Bindings panel does.
 
 - Worker URL: `https://emailworker.hongshangadmin.workers.dev`
 - Worker name: `emailworker` (in the `hongshangadmin` CF account)
 - Worker has an **Email Service** binding named `SEND_EMAIL`
 - Sender: `noreply@hongstex.shop`, Recipient: `inquiry@hongstex.shop`
-- Both addresses work once `hongstex.shop` is set up in CF Email Routing and `inquiry@hongstex.shop` is verified as a destination address there
+- `inquiry@hongstex.shop` works as destination once verified in CF Email Routing (it IS verified)
+- Worker code lives in CF Dashboard only — not in this repo
 
-The Worker code lives in the CF Dashboard (not in this repo). The Pages Function at `functions/contact.ts` remains in the repo but is unused for email — the form JS points directly to the Worker URL.
+The Pages Function at `functions/contact.ts` is not used for email. The form JS in both contact pages points directly to the Worker URL.
+
+---
 
 ## i18n Notes
 
-- Default locale: `zh`, secondary: `en`
-- Both use explicit URL prefixes (`prefixDefaultLocale: true`)
-- Root `/` handled by `functions/index.ts` — reads `Accept-Language` header, 302-redirects to `/zh/` or `/en/`
-- Language switcher in Nav uses relative path computed from `Astro.url.pathname` (NOT hardcoded absolute URLs, which would break on non-production domains)
+- Default locale: `zh`, secondary: `en`; both use explicit URL prefixes (`prefixDefaultLocale: true`)
+- Root `/` → `functions/index.ts` reads `Accept-Language`, 302-redirects to `/zh/` or `/en/`
+- hreflang tags use BCP-47 (`zh-CN` / `en-US`); x-default → `/zh/`
 
-## Known Content Issues (confirm with client before launch)
+---
 
-- **Founding year discrepancy**: intro.md says "成立于2005年" in the opening paragraph but "2017年" in the basic info section. Site currently uses **2005** as placeholder.
-- **Phone number**: currently `+86-XXX-XXXX-XXXX` placeholder in `src/i18n/zh.ts` and `src/i18n/en.ts`
-- **factory-interior.jpg**: placeholder image (duplicate of factory-workshop.jpg) — should be replaced with a real textile factory interior photo
+## Pending Content (confirm with client)
 
-## Raw Assets
+- **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** as placeholder.
+- **Phone number**: `+86-XXX-XXXX-XXXX` placeholder in `src/i18n/zh.ts` and `src/i18n/en.ts`
+- **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
 
-Source images in `raws/` (gitignored). Already copied and renamed to `src/assets/images/`:
+---
 
-| Original | Renamed |
-|----------|---------|
-| `1688超级工厂展示.jpg` | `factory-hero.jpg` |
-| `关于我们介绍.jpg` | `about-intro.jpg` |
-| `工厂车间环境展示.jpg` | `factory-workshop.jpg` |
-| `1688超级工厂规模数字.jpg` | `factory-stats.jpg` (unused — candidate for factory page) |
-| `定制流程.jpg` | `custom-process.jpg` |
-| `资质证书.jpg` | `certifications.jpg` |
-| `商标logo with 公司全称.jpg` | `logo-full.jpg` |
-| `logo avatar.jpg` | `logo-avatar.jpg` (unused) |
-| `产品-方格面料.jpg` | `product-square-grid.jpg` |
-| `产品-方块格棉布.jpg` | `product-block-check.jpg` |
-| `产品-威化棉十字罗纹.jpg` | `product-waffle-rib.jpg` |
-| `产品-提花弹力罗纹布.jpg` | `product-jacquard-rib.jpg` |
+## Image Assets
+
+`raws/` is gitignored. Images copied and renamed to `src/assets/images/`:
+
+| Original | Renamed | Used on |
+|----------|---------|---------|
+| `others/首页展示.png` | `factory-hero.jpg` | Home hero |
+| `关于我们介绍.jpg` | `about-intro.jpg` | Home teaser, About |
+| `工厂车间环境展示.jpg` | `factory-workshop.jpg` | Factory hero |
+| `1688超级工厂展示.jpg` | `factory-hero.jpg` (original) | superseded by 首页展示.png |
+| `1688超级工厂规模数字.jpg` | `factory-stats.jpg` | unused |
+| `定制流程.jpg` | `custom-process.jpg` | Factory |
+| `资质证书.jpg` | `certifications.jpg` | About |
+| `商标logo with 公司全称.jpg` | `logo-full.jpg` | About |
+| `logo avatar.jpg` | `logo-avatar.jpg` | unused |
+| `产品-方格面料.jpg` | `product-square-grid.jpg` | Products |
+| `产品-方块格棉布.jpg` | `product-block-check.jpg` | Products |
+| `产品-威化棉十字罗纹.jpg` | `product-waffle-rib.jpg` | Products |
+| `产品-提花弹力罗纹布.jpg` | `product-jacquard-rib.jpg` | Products |
+| `others/favicon.png` | `public/favicon.png` | Browser tab + Nav icon |
