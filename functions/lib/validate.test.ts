@@ -33,6 +33,14 @@ describe('validateContactForm', () => {
     expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
   });
 
+  it('rejects whitespace-only name', () => {
+    const data = new FormData();
+    data.set('name', '   ');
+    data.set('email', 'test@example.com');
+    data.set('message', 'Hello');
+    expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
+  });
+
   it('rejects invalid email format', () => {
     const data = new FormData();
     data.set('name', 'Test');

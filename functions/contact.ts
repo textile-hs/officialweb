@@ -44,15 +44,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   });
 
   if (env.SEND_EMAIL) {
-    const { EmailMessage } = await import('cloudflare:email' as string) as {
-      EmailMessage: new (from: string, to: string, raw: string) => unknown;
-    };
-    const emailMessage = new EmailMessage(
-      'noreply@hongstex.shop',
-      'inquiry@hongstex.shop',
-      msg.asRaw(),
-    );
-    await env.SEND_EMAIL.send(emailMessage as EmailMessage);
+    try {
+      const { EmailMessage } = await import('cloudflare:email' as string) as {
+        EmailMessage: new (from: string, to: string, raw: string) => unknown;
+      };
+      const emailMessage = new EmailMessage(
+        'noreply@hongstex.shop',
+        'inquiry@hongstex.shop',
+        msg.asRaw(),
+      );
+      await env.SEND_EMAIL.send(emailMessage as EmailMessage);
+    } catch (err) {
+      console.error('Email send failed:', err);
+      return new Response(JSON.stringify({ success: false }), { status: 500, headers });
+    }
   }
 
   return new Response(JSON.stringify({ success: true }), { status: 200, headers });

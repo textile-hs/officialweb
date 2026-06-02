@@ -9,7 +9,7 @@ type ValidResult = {
 
 type InvalidResult = {
   valid: false;
-  reason: 'bot' | 'missing_fields' | 'invalid_email';
+  reason: 'bot' | 'missing_fields' | 'invalid_email' | 'field_too_long';
 };
 
 export type ValidationResult = ValidResult | InvalidResult;
@@ -28,6 +28,10 @@ export function validateContactForm(data: FormData): ValidationResult {
 
   if (!name || !email || !message) {
     return { valid: false, reason: 'missing_fields' };
+  }
+
+  if (name.length > 100 || email.length > 254 || message.length > 4000 || phone.length > 30) {
+    return { valid: false, reason: 'field_too_long' };
   }
 
   if (!EMAIL_RE.test(email)) {
