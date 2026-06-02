@@ -1,0 +1,55 @@
+---
+// src/pages/en/factory.astro
+import Layout from '../../layouts/Layout.astro';
+import t from '../../i18n/en';
+import { Image } from 'astro:assets';
+import workshopImg from '../../assets/images/factory-workshop.jpg';
+import certBadgeImg from '../../assets/images/factory-hero.jpg';
+import processImg from '../../assets/images/custom-process.jpg';
+import interiorImg from '../../assets/images/factory-interior.jpg';
+---
+
+<Layout
+  t={t}
+  lang="en"
+  title="Our Factory — Foshan Hongshang Textile Co., Ltd."
+  description="Hongshang Textile operates a 5,000 m² modern knitting factory in Foshan, certified as an Alibaba 1688 Super Factory. OEM/ODM and custom orders available."
+  canonicalUrl="https://hongstex.shop/en/factory/"
+  alternateUrl="https://hongstex.shop/zh/factory/"
+>
+  <section class="relative h-[420px] overflow-hidden">
+    <Image src={workshopImg} alt="Hongshang Textile workshop" class="absolute inset-0 w-full h-full object-cover" width={1400} height={420} />
+    <div class="absolute inset-0 bg-primary/55" />
+    <div class="relative z-10 flex items-end h-full max-w-content mx-auto px-6 pb-10">
+      <div>
+        <h1 class="text-4xl font-bold text-white mb-2">{t.factory.pageTitle}</h1>
+        <p class="text-gray-200 max-w-xl">{t.factory.introText}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14 bg-white">
+    <div class="max-w-content mx-auto px-6">
+      <Image src={interiorImg} alt="Factory interior" class="w-full rounded shadow object-cover max-h-80" width={1200} height={320} />
+    </div>
+  </section>
+
+  <section class="py-14 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6 flex flex-col md:flex-row gap-10 items-center">
+      <div class="md:w-1/2">
+        <Image src={certBadgeImg} alt="1688 Super Factory certification" class="w-full rounded shadow object-cover h-64" width={600} height={256} />
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-2xl font-bold text-primary mb-4">{t.factory.certTitle}</h2>
+        <p class="text-[#555] leading-relaxed">{t.factory.certText}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-2xl font-bold text-primary mb-8">{t.factory.processTitle}</h2>
+      <Image src={processImg} alt="Custom order process" class="w-full rounded shadow" width={1200} height={500} />
+    </div>
+  </section>
+</Layout>
