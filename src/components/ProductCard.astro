@@ -1,0 +1,29 @@
+---
+// src/components/ProductCard.astro
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  name: string;
+  description: string;
+  img: ImageMetadata;
+}
+
+const { name, description, img } = Astro.props;
+---
+
+<div class="group bg-white border border-gray-200 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+  <div class="overflow-hidden h-48">
+    <Image
+      src={img}
+      alt={name}
+      width={400}
+      height={300}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+  <div class="p-4">
+    <h3 class="font-semibold text-primary mb-1">{name}</h3>
+    <p class="text-sm text-[#666666] leading-relaxed">{description}</p>
+  </div>
+</div>
