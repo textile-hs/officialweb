@@ -83,6 +83,17 @@ The language switcher link uses a relative path computed from `Astro.url.pathnam
 
 ---
 
+## Homepage Company Intro Section
+
+Below the products grid, a full-bleed two-column section introduces the company:
+- **Left half**: `home-intro.png` (source: `others/首页简介配图.png`, 1335×1178px, dark brownish background)
+- **Right half**: introTitle heading + gold divider + `about.intro` paragraph + 4 stats (founded/employees/area/output)
+- Section background: `bg-[#2c2826]` — matched to the image's actual background color (sampled via PIL corner pixels)
+- Layout: `flex flex-col md:flex-row` with no `max-w-content` wrapper, so the image column reaches the viewport edge on desktop
+- No `py-*` padding on the section itself; the image sets the height naturally
+
+---
+
 ## Contact Form Email Setup
 
 The contact form POSTs to a **standalone Cloudflare Worker**, not to the Pages Function. Reason: the Cloudflare Pages project's Bindings panel does not offer an Email Service binding option, whereas the Worker's Bindings panel does.
@@ -133,4 +144,5 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 | `产品-方块格棉布.jpg` | `product-block-check.jpg` | Products |
 | `产品-威化棉十字罗纹.jpg` | `product-waffle-rib.jpg` | Products |
 | `产品-提花弹力罗纹布.jpg` | `product-jacquard-rib.jpg` | Products |
+| `others/首页简介配图.png` | `home-intro.png` | Home company intro section |
 | `others/favicon.png` | `public/favicon.png` | Browser tab + Nav icon |
