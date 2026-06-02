@@ -1,0 +1,62 @@
+---
+// src/pages/zh/about.astro
+import Layout from '../../layouts/Layout.astro';
+import t from '../../i18n/zh';
+import { Image } from 'astro:assets';
+import introImg from '../../assets/images/about-intro.jpg';
+import certsImg from '../../assets/images/certifications.jpg';
+import logoImg from '../../assets/images/logo-full.jpg';
+---
+
+<Layout
+  t={t}
+  lang="zh"
+  title="公司介绍 — 佛山市鸿尚纺织有限公司"
+  description="鸿尚纺织成立于2005年，坐落于广东佛山张槎，专业针织面料生产企业，拥有5000㎡厂房，月产500吨，支持OEM/ODM定制。"
+  canonicalUrl="https://hongstex.shop/zh/about/"
+  alternateUrl="https://hongstex.shop/en/about/"
+>
+  <section class="py-14 bg-[#f8f8f8] border-b border-gray-200">
+    <div class="max-w-content mx-auto px-6">
+      <h1 class="text-4xl font-bold text-primary">{t.about.pageTitle}</h1>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6 flex flex-col md:flex-row gap-10 items-start">
+      <div class="md:w-1/2">
+        <Image src={introImg} alt="鸿尚纺织公司介绍" class="w-full rounded shadow object-cover" width={600} height={400} />
+      </div>
+      <div class="md:w-1/2">
+        <p class="text-[#555555] leading-loose text-base">{t.about.intro}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-2xl font-bold text-primary mb-8">{t.about.factsTitle}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {t.about.facts.map(fact => (
+          <div class="bg-white border border-gray-200 rounded p-5">
+            <div class="text-xs text-[#999] uppercase tracking-wider mb-1">{fact.label}</div>
+            <div class="font-semibold text-primary">{fact.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-2xl font-bold text-primary mb-8">{t.about.certsTitle}</h2>
+      <Image src={certsImg} alt="资质证书" class="max-w-lg w-full rounded shadow" width={600} height={400} />
+    </div>
+  </section>
+
+  <section class="py-10 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6 flex justify-center">
+      <Image src={logoImg} alt="鸿尚纺织商标" class="max-w-xs w-full object-contain" width={360} height={200} />
+    </div>
+  </section>
+</Layout>

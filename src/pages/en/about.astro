@@ -1,0 +1,62 @@
+---
+// src/pages/en/about.astro
+import Layout from '../../layouts/Layout.astro';
+import t from '../../i18n/en';
+import { Image } from 'astro:assets';
+import introImg from '../../assets/images/about-intro.jpg';
+import certsImg from '../../assets/images/certifications.jpg';
+import logoImg from '../../assets/images/logo-full.jpg';
+---
+
+<Layout
+  t={t}
+  lang="en"
+  title="About Us — Foshan Hongshang Textile Co., Ltd."
+  description="Established in 2005 in Zhangcha, Foshan, Hongshang Textile is a professional knitted fabric manufacturer with 5,000 m² factory, 500t/month output, OEM/ODM available."
+  canonicalUrl="https://hongstex.shop/en/about/"
+  alternateUrl="https://hongstex.shop/zh/about/"
+>
+  <section class="py-14 bg-[#f8f8f8] border-b border-gray-200">
+    <div class="max-w-content mx-auto px-6">
+      <h1 class="text-4xl font-bold text-primary">{t.about.pageTitle}</h1>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6 flex flex-col md:flex-row gap-10 items-start">
+      <div class="md:w-1/2">
+        <Image src={introImg} alt="Hongshang Textile company introduction" class="w-full rounded shadow object-cover" width={600} height={400} />
+      </div>
+      <div class="md:w-1/2">
+        <p class="text-[#555555] leading-loose text-base">{t.about.intro}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-2xl font-bold text-primary mb-8">{t.about.factsTitle}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {t.about.facts.map(fact => (
+          <div class="bg-white border border-gray-200 rounded p-5">
+            <div class="text-xs text-[#999] uppercase tracking-wider mb-1">{fact.label}</div>
+            <div class="font-semibold text-primary">{fact.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-2xl font-bold text-primary mb-8">{t.about.certsTitle}</h2>
+      <Image src={certsImg} alt="Certifications" class="max-w-lg w-full rounded shadow" width={600} height={400} />
+    </div>
+  </section>
+
+  <section class="py-10 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6 flex justify-center">
+      <Image src={logoImg} alt="Hongshang Textile brand logo" class="max-w-xs w-full object-contain" width={360} height={200} />
+    </div>
+  </section>
+</Layout>
