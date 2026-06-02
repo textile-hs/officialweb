@@ -83,4 +83,36 @@ import t from '../../i18n/en';
 
     </div>
   </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successBox = document.getElementById('form-success') as HTMLElement;
+    const errorBox = document.getElementById('form-error') as HTMLElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      successBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+
+      try {
+        const res = await fetch('/contact', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const json = await res.json() as { success: boolean };
+        if (json.success) {
+          form.reset();
+          successBox.classList.remove('hidden');
+        } else {
+          errorBox.classList.remove('hidden');
+        }
+      } catch {
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </Layout>
