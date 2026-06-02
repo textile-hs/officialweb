@@ -98,7 +98,7 @@ import t from '../../i18n/en';
       errorBox.classList.add('hidden');
 
       try {
-        const res = await fetch('/contact', {
+        const res = await fetch('https://emailworker.hongshangadmin.workers.dev', {
           method: 'POST',
           body: new FormData(form),
         });
