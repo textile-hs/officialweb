@@ -4,23 +4,80 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Official website for **textile-hs**, a Chinese textile/fabric manufacturer. The repo is hosted at `https://github.com/textile-hs/officialweb`. No frontend framework or build toolchain has been chosen yet — this is a greenfield project.
+Bilingual (zh/en) marketing website for **佛山市鸿尚纺织有限公司** (Foshan Hongshang Textile Co., Ltd.), a knitted fabric manufacturer. Repo: `git@github.com:textile-hs/officialweb.git`.
+
+**Status: Live at `https://www.hongstex.shop`**
+
+## Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| Framework | Astro v4 (SSG, static output) |
+| Styling | Tailwind CSS v3 (pinned — peer dep of @astrojs/tailwind@6) |
+| i18n | Astro built-in, explicit `/zh/` and `/en/` prefixes |
+| Hosting | Cloudflare Pages (auto-deploys on `git push`) |
+| Contact form email | Cloudflare Worker (`emailworker.hongshangadmin.workers.dev`) |
+| SEO | @astrojs/sitemap v3.2.1 |
+
+## Commands
+
+```bash
+npm run dev      # local dev server
+npm run build    # production build → dist/
+npm test         # Vitest unit tests (functions/lib/validate.test.ts)
+```
+
+## Architecture
+
+- `src/pages/zh/` and `src/pages/en/` — one file per page per locale
+- `src/i18n/zh.ts` and `src/i18n/en.ts` — all UI strings (typed via `src/i18n/types.ts`)
+- `src/layouts/Layout.astro` — HTML shell with Nav, Footer, hreflang, Google Fonts
+- `src/assets/images/` — optimized images (Astro `<Image>` component, auto-converts to WebP)
+- `functions/` — Cloudflare Pages Functions (language redirect only; contact form moved to Worker)
+- `functions/lib/validate.ts` — pure contact form validation (no CF runtime deps)
+
+## Contact Form Email Setup
+
+The contact form posts to a **standalone Cloudflare Worker** (not a Pages Function) because Pages Functions do not expose an Email Service binding in the dashboard.
+
+- Worker URL: `https://emailworker.hongshangadmin.workers.dev`
+- Worker name: `emailworker` (in the `hongshangadmin` CF account)
+- Worker has an **Email Service** binding named `SEND_EMAIL`
+- Destination address: the owner's personal inbox (verified in CF Email Routing)
+- `noreply@hongstex.shop` is the sender address (via CF Email Routing on `hongstex.shop`)
+
+**Important:** The `to` address in the Worker code must be the **personal inbox** (verified destination in CF Email Routing), NOT `inquiry@hongstex.shop`. `inquiry@hongstex.shop` is a forwarding rule, not a verified destination — using it causes `Error: destination address is not a verified address`.
+
+The Worker code lives in the CF Dashboard (not in this repo). The Pages Function at `functions/contact.ts` remains in the repo but is unused for email — the form JS points directly to the Worker URL.
+
+## i18n Notes
+
+- Default locale: `zh`, secondary: `en`
+- Both use explicit URL prefixes (`prefixDefaultLocale: true`)
+- Root `/` handled by `functions/index.ts` — reads `Accept-Language` header, 302-redirects to `/zh/` or `/en/`
+- Language switcher in Nav uses relative path computed from `Astro.url.pathname` (NOT hardcoded absolute URLs, which would break on non-production domains)
+
+## Known Content Issues (confirm with client before launch)
+
+- **Founding year discrepancy**: intro.md says "成立于2005年" in the opening paragraph but "2017年" in the basic info section. Site currently uses **2005** as placeholder.
+- **Phone number**: currently `+86-XXX-XXXX-XXXX` placeholder in `src/i18n/zh.ts` and `src/i18n/en.ts`
+- **factory-interior.jpg**: placeholder image (duplicate of factory-workshop.jpg) — should be replaced with a real textile factory interior photo
 
 ## Raw Assets
 
-All source images are in `raws/` and should be optimized before use in the site:
+Source images in `raws/` (gitignored). Already copied and renamed to `src/assets/images/`:
 
-| File | Purpose |
-|------|---------|
-| `商标logo with 公司全称.jpg` | Company logo with full name |
-| `logo avatar.jpg` | Avatar/icon version of logo |
-| `关于我们介绍.jpg` | About us section background/content |
-| `工厂车间环境展示.jpg` | Factory floor environment photo |
-| `1688超级工厂展示.jpg` | 1688 super-factory showcase image |
-| `1688超级工厂规模数字.jpg` | Factory scale/stats infographic |
-| `定制流程.jpg` | Custom order process diagram |
-| `资质证书.jpg` | Qualification certificates |
-| `产品-方格面料.jpg` | Product: square grid fabric |
-| `产品-方块格棉布.jpg` | Product: block check cotton |
-| `产品-威化棉十字罗纹.jpg` | Product: waffle cotton cross-rib |
-| `产品-提花弹力罗纹布.jpg` | Product: jacquard stretch rib fabric |
+| Original | Renamed |
+|----------|---------|
+| `1688超级工厂展示.jpg` | `factory-hero.jpg` |
+| `关于我们介绍.jpg` | `about-intro.jpg` |
+| `工厂车间环境展示.jpg` | `factory-workshop.jpg` |
+| `1688超级工厂规模数字.jpg` | `factory-stats.jpg` (unused — candidate for factory page) |
+| `定制流程.jpg` | `custom-process.jpg` |
+| `资质证书.jpg` | `certifications.jpg` |
+| `商标logo with 公司全称.jpg` | `logo-full.jpg` |
+| `logo avatar.jpg` | `logo-avatar.jpg` (unused) |
+| `产品-方格面料.jpg` | `product-square-grid.jpg` |
+| `产品-方块格棉布.jpg` | `product-block-check.jpg` |
+| `产品-威化棉十字罗纹.jpg` | `product-waffle-rib.jpg` |
+| `产品-提花弹力罗纹布.jpg` | `product-jacquard-rib.jpg` |
