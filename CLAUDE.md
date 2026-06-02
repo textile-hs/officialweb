@@ -38,15 +38,13 @@ npm test         # Vitest unit tests (functions/lib/validate.test.ts)
 
 ## Contact Form Email Setup
 
-The contact form posts to a **standalone Cloudflare Worker** (not a Pages Function) because Pages Functions do not expose an Email Service binding in the dashboard.
+The contact form posts to a **standalone Cloudflare Worker** (not a Pages Function). Reason: the Cloudflare Pages project's Bindings panel does not offer an "Email Service" binding option, whereas the Worker's Bindings panel does. This may be a Cloudflare Pages limitation or a dashboard configuration issue.
 
 - Worker URL: `https://emailworker.hongshangadmin.workers.dev`
 - Worker name: `emailworker` (in the `hongshangadmin` CF account)
 - Worker has an **Email Service** binding named `SEND_EMAIL`
-- Destination address: the owner's personal inbox (verified in CF Email Routing)
-- `noreply@hongstex.shop` is the sender address (via CF Email Routing on `hongstex.shop`)
-
-**Important:** The `to` address in the Worker code must be the **personal inbox** (verified destination in CF Email Routing), NOT `inquiry@hongstex.shop`. `inquiry@hongstex.shop` is a forwarding rule, not a verified destination — using it causes `Error: destination address is not a verified address`.
+- Sender: `noreply@hongstex.shop`, Recipient: `inquiry@hongstex.shop`
+- Both addresses work once `hongstex.shop` is set up in CF Email Routing and `inquiry@hongstex.shop` is verified as a destination address there
 
 The Worker code lives in the CF Dashboard (not in this repo). The Pages Function at `functions/contact.ts` remains in the repo but is unused for email — the form JS points directly to the Worker URL.
 
