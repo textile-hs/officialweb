@@ -21,6 +21,7 @@ const en: Translations = {
     heroCta: 'Contact Us',
     productsTitle: 'Our Products',
     productsViewAll: 'View All Products',
+    introTitle: 'Company Profile',
     statsLabel: 'Company at a Glance',
     statsItems: [
       { label: 'Founded', value: '2005' },

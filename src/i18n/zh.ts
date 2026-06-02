@@ -21,6 +21,7 @@ const zh: Translations = {
     heroCta: '联系我们',
     productsTitle: '主营产品',
     productsViewAll: '查看全部产品',
+    introTitle: '公司简介',
     statsLabel: '企业实力',
     statsItems: [
       { label: '成立年份', value: '2005 年' },

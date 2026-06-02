@@ -5,7 +5,7 @@ import ProductCard from '../../components/ProductCard.astro';
 import t from '../../i18n/zh';
 import { Image } from 'astro:assets';
 import heroImg from '../../assets/images/factory-hero.jpg';
-import aboutImg from '../../assets/images/about-intro.jpg';
+import homeIntroImg from '../../assets/images/home-intro.png';
 import prod1 from '../../assets/images/product-square-grid.jpg';
 import prod2 from '../../assets/images/product-block-check.jpg';
 import prod3 from '../../assets/images/product-waffle-rib.jpg';
@@ -49,33 +49,26 @@ const products = [
     </div>
   </section>
 
-  <!-- Stats bar -->
-  <section class="py-12 bg-primary text-white">
+  <!-- Company intro -->
+  <section class="py-16 bg-primary text-white">
     <div class="max-w-content mx-auto px-6">
-      <h2 class="text-xl font-semibold text-center text-accent mb-8">{t.home.statsLabel}</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        {t.home.statsItems.map(stat => (
-          <div>
-            <div class="text-3xl font-bold text-accent">{stat.value}</div>
-            <div class="text-gray-300 mt-1 text-sm">{stat.label}</div>
+      <div class="flex flex-col md:flex-row gap-12 items-center">
+        <div class="md:w-1/2 shrink-0">
+          <Image src={homeIntroImg} alt="鸿尚纺织企业简介" class="w-full h-auto" width={1335} height={1178} />
+        </div>
+        <div class="md:w-1/2">
+          <h2 class="text-2xl font-bold text-accent mb-3">{t.home.introTitle}</h2>
+          <div class="w-10 h-0.5 bg-accent mb-6"></div>
+          <p class="text-gray-300 leading-relaxed text-sm mb-10">{t.about.intro}</p>
+          <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+            {t.home.statsItems.map(stat => (
+              <div class="border-l-2 border-accent pl-4">
+                <div class="text-2xl font-bold text-accent">{stat.value}</div>
+                <div class="text-xs text-gray-400 mt-0.5">{stat.label}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- About teaser -->
-  <section class="py-16 bg-[#f8f8f8]">
-    <div class="max-w-content mx-auto px-6 flex flex-col md:flex-row gap-10 items-center">
-      <div class="md:w-1/2">
-        <Image src={aboutImg} alt="关于鸿尚纺织" class="w-full rounded shadow-md object-cover h-72" width={600} height={288} />
-      </div>
-      <div class="md:w-1/2">
-        <h2 class="text-3xl font-bold text-primary mb-4">{t.home.aboutTitle}</h2>
-        <p class="text-[#666666] leading-relaxed mb-6">{t.home.aboutText}</p>
-        <a href="/zh/about/" class="bg-primary text-white px-6 py-3 rounded font-medium hover:bg-[#2a2a4e] transition-colors inline-block">
-          {t.home.aboutCta}
-        </a>
+        </div>
       </div>
     </div>
   </section>

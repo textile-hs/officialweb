@@ -19,8 +19,9 @@ export interface Translations {
     heroCta: string;
     productsTitle: string;
     productsViewAll: string;
-    statsLabel: string;
+    introTitle: string;
     statsItems: Array<{ label: string; value: string }>;
+    statsLabel: string;
     aboutTitle: string;
     aboutText: string;
     aboutCta: string;
