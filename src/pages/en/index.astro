@@ -1,0 +1,88 @@
+---
+// src/pages/en/index.astro
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import t from '../../i18n/en';
+import { Image } from 'astro:assets';
+import heroImg from '../../assets/images/factory-hero.jpg';
+import aboutImg from '../../assets/images/about-intro.jpg';
+import prod1 from '../../assets/images/product-square-grid.jpg';
+import prod2 from '../../assets/images/product-block-check.jpg';
+import prod3 from '../../assets/images/product-waffle-rib.jpg';
+import prod4 from '../../assets/images/product-jacquard-rib.jpg';
+
+const products = [
+  { img: prod1, ...t.products.items[0] },
+  { img: prod2, ...t.products.items[1] },
+  { img: prod3, ...t.products.items[2] },
+  { img: prod4, ...t.products.items[3] },
+];
+---
+
+<Layout
+  t={t}
+  lang="en"
+  title="Foshan Hongshang Textile Co., Ltd. — Professional Knitted Fabrics"
+  description="Hongshang Textile specialises in knitted fabric R&D, manufacturing and customisation. OEM/ODM available. Square grid, rib, jacquard fabrics — serving clients worldwide."
+  canonicalUrl="https://hongstex.shop/en/"
+  alternateUrl="https://hongstex.shop/zh/"
+>
+  <!-- Hero -->
+  <section class="relative h-[580px] flex items-center justify-center overflow-hidden">
+    <Image src={heroImg} alt="Hongshang Textile factory" class="absolute inset-0 w-full h-full object-cover" width={1400} height={580} />
+    <div class="absolute inset-0 bg-primary/65" />
+    <div class="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">{t.home.heroTitle}</h1>
+      <p class="text-xl text-gray-200 mb-8">{t.home.heroSubtitle}</p>
+      <a href="/en/contact/" class="bg-accent hover:bg-[#b8963e] text-white px-8 py-3 rounded font-medium transition-colors inline-block">
+        {t.home.heroCta}
+      </a>
+    </div>
+  </section>
+
+  <!-- Products preview -->
+  <section class="py-16 bg-white">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-primary mb-10">{t.home.productsTitle}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {products.map(p => <ProductCard name={p.name} description={p.description} img={p.img} />)}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/en/products/" class="border-2 border-primary text-primary px-8 py-3 rounded font-medium hover:bg-primary hover:text-white transition-colors inline-block">
+          {t.home.productsViewAll}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <section class="py-12 bg-primary text-white">
+    <div class="max-w-content mx-auto px-6">
+      <h2 class="text-xl font-semibold text-center text-accent mb-8">{t.home.statsLabel}</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        {t.home.statsItems.map(stat => (
+          <div>
+            <div class="text-3xl font-bold text-accent">{stat.value}</div>
+            <div class="text-gray-300 mt-1 text-sm">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="py-16 bg-[#f8f8f8]">
+    <div class="max-w-content mx-auto px-6 flex flex-col md:flex-row gap-10 items-center">
+      <div class="md:w-1/2">
+        <Image src={aboutImg} alt="About Hongshang Textile" class="w-full rounded shadow-md object-cover h-72" width={600} height={288} />
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-3xl font-bold text-primary mb-4">{t.home.aboutTitle}</h2>
+        <p class="text-[#666666] leading-relaxed mb-6">{t.home.aboutText}</p>
+        <a href="/en/about/" class="bg-primary text-white px-6 py-3 rounded font-medium hover:bg-[#2a2a4e] transition-colors inline-block">
+          {t.home.aboutCta}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
