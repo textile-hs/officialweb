@@ -8,9 +8,11 @@ interface Props {
   alternateUrl: string;
 }
 
-const { t, lang, alternateUrl } = Astro.props;
+const { t, lang } = Astro.props;
 const base = `/${lang}`;
 const path = Astro.url.pathname;
+const altLang = lang === 'zh' ? 'en' : 'zh';
+const alternatePath = path.replace(new RegExp(`^/${lang}`), `/${altLang}`);
 
 const links = [
   { href: `${base}/`, label: t.nav.home },
@@ -44,7 +46,7 @@ function isActive(href: string): boolean {
         </a>
       ))}
       <a
-        href={alternateUrl}
+        href={alternatePath}
         class="ml-2 text-xs border border-gray-600 px-2 py-1 rounded hover:border-accent hover:text-accent transition-colors"
       >
         {lang === 'zh' ? 'EN' : '中文'}
@@ -70,7 +72,7 @@ function isActive(href: string): boolean {
           {link.label}
         </a>
       ))}
-      <a href={alternateUrl} class="py-2 text-sm text-accent">
+      <a href={alternatePath} class="py-2 text-sm text-accent">
         {lang === 'zh' ? 'EN' : '中文'}
       </a>
     </div>
