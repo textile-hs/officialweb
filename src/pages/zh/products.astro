@@ -1,0 +1,47 @@
+---
+// src/pages/zh/products.astro
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import t from '../../i18n/zh';
+import prod1 from '../../assets/images/product-square-grid.jpg';
+import prod2 from '../../assets/images/product-block-check.jpg';
+import prod3 from '../../assets/images/product-waffle-rib.jpg';
+import prod4 from '../../assets/images/product-jacquard-rib.jpg';
+
+const products = [
+  { img: prod1, ...t.products.items[0] },
+  { img: prod2, ...t.products.items[1] },
+  { img: prod3, ...t.products.items[2] },
+  { img: prod4, ...t.products.items[3] },
+];
+---
+
+<Layout
+  t={t}
+  lang="zh"
+  title="产品展示 — 佛山市鸿尚纺织有限公司"
+  description="鸿尚纺织主营方格面料、方块格棉布、威化棉十字罗纹、提花弹力罗纹布等针织面料，支持OEM/ODM定制，欢迎咨询。"
+  canonicalUrl="https://hongstex.shop/zh/products/"
+  alternateUrl="https://hongstex.shop/en/products/"
+>
+  <section class="py-14 bg-[#f8f8f8] border-b border-gray-200">
+    <div class="max-w-content mx-auto px-6">
+      <h1 class="text-4xl font-bold text-primary">{t.products.pageTitle}</h1>
+      <p class="text-[#666] mt-2">{t.products.subtitle}</p>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="max-w-content mx-auto px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {products.map(p => <ProductCard name={p.name} description={p.description} img={p.img} />)}
+      </div>
+      <div class="bg-[#f8f8f8] border border-gray-200 rounded p-6">
+        <p class="text-[#555] leading-relaxed">{t.products.customNote}</p>
+        <a href="/zh/contact/" class="mt-4 inline-block bg-accent hover:bg-[#b8963e] text-white px-6 py-2.5 rounded font-medium transition-colors">
+          {t.contact.formTitle}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
