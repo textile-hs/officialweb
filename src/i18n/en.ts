@@ -53,10 +53,10 @@ const en: Translations = {
     subtitle: 'Professional Knitted Fabrics, Custom Orders Welcome',
     customNote: 'Beyond the featured products, we also supply cotton-linen, yarn-dyed, pure cotton, wool blend, warp-knit fabrics and more. OEM/ODM and sample-based customisation available. Enquiries welcome.',
     items: [
-      { name: 'Square Grid Fabric', description: 'Classic grid pattern with a soft hand feel, suitable for casual wear and home textiles.' },
-      { name: 'Block Check Cotton', description: 'Pure cotton block check, breathable and skin-friendly with stable colour, ideal for mid-to-high-end fashion.' },
-      { name: 'Waffle Cotton Cross-Rib', description: 'Waffle texture combined with cross-rib structure — strong three-dimensional effect with excellent stretch, perfect for sportswear.' },
-      { name: 'Jacquard Stretch Rib', description: 'Jacquard weave with stretch rib, fine pattern detail and superior elasticity, suited for premium fashion.' },
+      { name: 'Waffle Fabric', description: 'Three-dimensional waffle texture, moisture-wicking and breathable with a full hand feel — ideal for casual wear and home textiles.' },
+      { name: 'Rib Fabric', description: 'Vertical rib structure with excellent elasticity and recovery — perfect for cuffs, neckbands and sportswear.' },
+      { name: 'Jacquard Knit', description: 'Computerised jacquard with intricate, multi-layer patterns — suited for premium fashion and creative fabric development.' },
+      { name: 'Single Jersey', description: 'Lightweight, smooth and soft with high colour fidelity — ideal for base layers, innerwear and everyday garments.' },
     ],
   },
   factory: {
