@@ -1,0 +1,45 @@
+---
+// src/layouts/Layout.astro
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+  lang: 'zh' | 'en';
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  alternateUrl: string;
+}
+
+const { t, lang, title, description, canonicalUrl, alternateUrl } = Astro.props;
+const alternateLang = lang === 'zh' ? 'en' : 'zh';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={`https://hongstex.shop/zh/`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans text-[#333333] bg-white">
+    <Nav t={t} lang={lang} alternateUrl={alternateUrl} />
+    <main class="pt-16">
+      <slot />
+    </main>
+    <Footer t={t} />
+  </body>
+</html>
