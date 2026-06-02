@@ -17,10 +17,10 @@ const { t } = Astro.props;
     </div>
     <div class="flex flex-col gap-1">
       <p>
-        <span class="text-gray-400">Email: </span>
+        <span class="text-gray-400">{t.contact.emailLabel}：</span>
         <a href={`mailto:${t.footer.email}`} class="hover:text-accent transition-colors">{t.footer.email}</a>
       </p>
-      <p><span class="text-gray-400">Tel: </span>{t.footer.phone}</p>
+      <p><span class="text-gray-400">{t.contact.phoneLabel}：</span>{t.footer.phone}</p>
     </div>
   </div>
   <div class="max-w-content mx-auto px-6 mt-6 pt-4 border-t border-gray-700 text-xs text-gray-500">

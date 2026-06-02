@@ -15,6 +15,8 @@ interface Props {
 
 const { t, lang, title, description, canonicalUrl, alternateUrl } = Astro.props;
 const alternateLang = lang === 'zh' ? 'en' : 'zh';
+const bcp47: Record<string, string> = { zh: 'zh-CN', en: 'en-US' };
+const xDefault = new URL('/zh/', Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,9 +27,9 @@ const alternateLang = lang === 'zh' ? 'en' : 'zh';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang={lang} href={canonicalUrl} />
-    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
-    <link rel="alternate" hreflang="x-default" href={`https://hongstex.shop/zh/`} />
+    <link rel="alternate" hreflang={bcp47[lang]} href={canonicalUrl} />
+    <link rel="alternate" hreflang={bcp47[alternateLang]} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
