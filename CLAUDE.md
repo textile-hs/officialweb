@@ -120,7 +120,7 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 ## Pending Content (confirm with client)
 
 - **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** as placeholder.
-- **Phone number**: `+86-XXX-XXXX-XXXX` placeholder in `src/i18n/zh.ts` and `src/i18n/en.ts`
+- **Phone number**: `+86 180 2275 6346` ✓ confirmed
 - **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
 
 ---
