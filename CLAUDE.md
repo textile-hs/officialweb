@@ -112,14 +112,7 @@ The form POSTs to a **standalone Cloudflare Worker**, not to the Pages Function.
 - Sender: `noreply@hongstex.shop`, Recipient: `inquiry@hongstex.shop`
 - Worker code lives in CF Dashboard only — not in this repo
 
-**⚠️ Pending:** Worker code still reads `email`/`phone` fields. Must be updated to read the `contact` field and reflect the new form structure. Change in Worker:
-```js
-// old
-const email = formData.get('email') || '';
-const phone = formData.get('phone') || '';
-// new
-const contact = formData.get('contact') || '';
-```
+Worker code updated and deployed — reads `contact` field, no email format validation. Tested and confirmed working (email received at `inquiry@hongstex.shop`).
 
 The Pages Function at `functions/contact.ts` is not used for email. The form JS in both contact pages points directly to the Worker URL.
 
@@ -135,7 +128,6 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 ## Pending
 
-- **Worker update**: Update `emailworker` in CF Dashboard to read `contact` field instead of `email`/`phone` (see Contact Form section above)
 - **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** — confirm with client
 - **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
 
