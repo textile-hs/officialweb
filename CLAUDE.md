@@ -128,7 +128,7 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 ## Pending
 
-- **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
+- `办公室.jpg` in `others/` — office scene, no suitable slot in current factory page layout. Reserved for future "office/team" section if needed.
 
 ---
 
@@ -141,6 +141,7 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 | `others/首页展示.png` | `factory-hero.jpg` | Home hero |
 | `关于我们介绍.jpg` | `about-intro.jpg` | Home teaser, About |
 | `工厂车间环境展示.jpg` | `factory-workshop.jpg` | Factory hero |
+| `others/车间大圆机.jpg` | `factory-interior.jpg` | Factory interior section |
 | `1688超级工厂展示.jpg` | `factory-hero.jpg` (original) | superseded by 首页展示.png |
 | `1688超级工厂规模数字.jpg` | `factory-stats.jpg` | unused |
 | `定制流程.jpg` | `custom-process.jpg` | Factory |
