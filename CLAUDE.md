@@ -128,7 +128,6 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 ## Pending
 
-- **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** — confirm with client
 - **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
 
 ---
