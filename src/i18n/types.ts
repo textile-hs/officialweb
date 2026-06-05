@@ -54,8 +54,8 @@ export interface Translations {
     phoneLabel: string;
     formTitle: string;
     nameLabel: string;
-    emailFieldLabel: string;
-    phoneFieldLabel: string;
+    contactFieldLabel: string;
+    contactFieldPlaceholder: string;
     messageLabel: string;
     submitLabel: string;
     successMsg: string;

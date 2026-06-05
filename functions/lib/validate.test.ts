@@ -7,19 +7,19 @@ describe('validateContactForm', () => {
     const data = new FormData();
     data.set('website', 'http://spambot.com');
     data.set('name', 'Bot');
-    data.set('email', 'bot@example.com');
+    data.set('contact', 'bot@example.com');
     data.set('message', 'spam');
     expect(validateContactForm(data)).toEqual({ valid: false, reason: 'bot' });
   });
 
   it('rejects when name is missing', () => {
     const data = new FormData();
-    data.set('email', 'test@example.com');
+    data.set('contact', 'WeChat: abc123');
     data.set('message', 'Hello');
     expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
   });
 
-  it('rejects when email is missing', () => {
+  it('rejects when contact is missing', () => {
     const data = new FormData();
     data.set('name', 'Test');
     data.set('message', 'Hello');
@@ -29,51 +29,48 @@ describe('validateContactForm', () => {
   it('rejects when message is missing', () => {
     const data = new FormData();
     data.set('name', 'Test');
-    data.set('email', 'test@example.com');
+    data.set('contact', '+86 180 2275 6346');
     expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
   });
 
   it('rejects whitespace-only name', () => {
     const data = new FormData();
     data.set('name', '   ');
-    data.set('email', 'test@example.com');
+    data.set('contact', '+86 180 2275 6346');
     data.set('message', 'Hello');
     expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
   });
 
-  it('rejects invalid email format', () => {
+  it('rejects whitespace-only contact', () => {
     const data = new FormData();
     data.set('name', 'Test');
-    data.set('email', 'not-an-email');
+    data.set('contact', '   ');
     data.set('message', 'Hello');
-    expect(validateContactForm(data)).toEqual({ valid: false, reason: 'invalid_email' });
+    expect(validateContactForm(data)).toEqual({ valid: false, reason: 'missing_fields' });
   });
 
-  it('accepts valid input with optional phone', () => {
+  it('accepts phone number as contact method', () => {
     const data = new FormData();
     data.set('name', 'Jane Doe');
-    data.set('email', 'jane@example.com');
-    data.set('phone', '+86-123-4567-8901');
+    data.set('contact', '+86 180 2275 6346');
     data.set('message', 'I would like to order fabric samples.');
     expect(validateContactForm(data)).toEqual({
       valid: true,
       name: 'Jane Doe',
-      email: 'jane@example.com',
-      phone: '+86-123-4567-8901',
+      contact: '+86 180 2275 6346',
       message: 'I would like to order fabric samples.',
     });
   });
 
-  it('accepts valid input without phone', () => {
+  it('accepts email address as contact method', () => {
     const data = new FormData();
     data.set('name', 'John');
-    data.set('email', 'john@example.com');
+    data.set('contact', 'john@example.com');
     data.set('message', 'Hi');
     expect(validateContactForm(data)).toEqual({
       valid: true,
       name: 'John',
-      email: 'john@example.com',
-      phone: '',
+      contact: 'john@example.com',
       message: 'Hi',
     });
   });

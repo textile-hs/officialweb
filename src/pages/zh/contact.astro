@@ -58,13 +58,9 @@ import t from '../../i18n/zh';
               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-primary mb-1" for="email">{t.contact.emailFieldLabel} *</label>
-            <input id="email" name="email" type="email" required maxlength="254"
-              class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-primary mb-1" for="phone">{t.contact.phoneFieldLabel}</label>
-            <input id="phone" name="phone" type="tel" maxlength="30"
+            <label class="block text-sm font-medium text-primary mb-1" for="contact">{t.contact.contactFieldLabel} *</label>
+            <input id="contact" name="contact" type="text" required maxlength="200"
+              placeholder={t.contact.contactFieldPlaceholder}
               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent" />
           </div>
           <div>

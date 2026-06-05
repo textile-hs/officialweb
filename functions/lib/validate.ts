@@ -2,19 +2,16 @@
 type ValidResult = {
   valid: true;
   name: string;
-  email: string;
-  phone: string;
+  contact: string;
   message: string;
 };
 
 type InvalidResult = {
   valid: false;
-  reason: 'bot' | 'missing_fields' | 'invalid_email' | 'field_too_long';
+  reason: 'bot' | 'missing_fields' | 'field_too_long';
 };
 
 export type ValidationResult = ValidResult | InvalidResult;
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateContactForm(data: FormData): ValidationResult {
   if (data.get('website')) {
@@ -22,21 +19,16 @@ export function validateContactForm(data: FormData): ValidationResult {
   }
 
   const name = (data.get('name') as string | null)?.trim() ?? '';
-  const email = (data.get('email') as string | null)?.trim() ?? '';
-  const phone = (data.get('phone') as string | null)?.trim() ?? '';
+  const contact = (data.get('contact') as string | null)?.trim() ?? '';
   const message = (data.get('message') as string | null)?.trim() ?? '';
 
-  if (!name || !email || !message) {
+  if (!name || !contact || !message) {
     return { valid: false, reason: 'missing_fields' };
   }
 
-  if (name.length > 100 || email.length > 254 || message.length > 4000 || phone.length > 30) {
+  if (name.length > 100 || contact.length > 200 || message.length > 4000) {
     return { valid: false, reason: 'field_too_long' };
   }
 
-  if (!EMAIL_RE.test(email)) {
-    return { valid: false, reason: 'invalid_email' };
-  }
-
-  return { valid: true, name, email, phone, message };
+  return { valid: true, name, contact, message };
 }
