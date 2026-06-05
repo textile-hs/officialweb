@@ -94,16 +94,32 @@ Below the products grid, a full-bleed two-column section introduces the company:
 
 ---
 
-## Contact Form Email Setup
+## Contact Form
 
-The contact form POSTs to a **standalone Cloudflare Worker**, not to the Pages Function. Reason: the Cloudflare Pages project's Bindings panel does not offer an Email Service binding option, whereas the Worker's Bindings panel does.
+### Fields
+
+The form has three required fields: **姓名/Name**, **联系方式/Contact Method**, **留言/Message**.
+
+The `contact` field is a free-text input — visitors enter phone, WeChat, email, or any other method. No email format validation. `validate.ts` checks that all three fields are non-empty and within length limits (name ≤ 100, contact ≤ 200, message ≤ 4000).
+
+### Email delivery
+
+The form POSTs to a **standalone Cloudflare Worker**, not to the Pages Function. Reason: the Cloudflare Pages project's Bindings panel does not offer an Email Service binding option, whereas the Worker's Bindings panel does.
 
 - Worker URL: `https://emailworker.hongshangadmin.workers.dev`
 - Worker name: `emailworker` (in the `hongshangadmin` CF account)
 - Worker has an **Email Service** binding named `SEND_EMAIL`
 - Sender: `noreply@hongstex.shop`, Recipient: `inquiry@hongstex.shop`
-- `inquiry@hongstex.shop` works as destination once verified in CF Email Routing (it IS verified)
 - Worker code lives in CF Dashboard only — not in this repo
+
+**⚠️ Pending:** Worker code still reads `email`/`phone` fields. Must be updated to read the `contact` field and reflect the new form structure. Change in Worker:
+```js
+// old
+const email = formData.get('email') || '';
+const phone = formData.get('phone') || '';
+// new
+const contact = formData.get('contact') || '';
+```
 
 The Pages Function at `functions/contact.ts` is not used for email. The form JS in both contact pages points directly to the Worker URL.
 
@@ -117,10 +133,10 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 ---
 
-## Pending Content (confirm with client)
+## Pending
 
-- **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** as placeholder.
-- **Phone number**: `+86 180 2275 6346` ✓ confirmed
+- **Worker update**: Update `emailworker` in CF Dashboard to read `contact` field instead of `email`/`phone` (see Contact Form section above)
+- **Founding year**: intro.md says "2005年" in intro paragraph but "2017年" in basic info. Site uses **2005** — confirm with client
 - **factory-interior.jpg**: duplicate of factory-workshop.jpg — replace with a real factory interior photo
 
 ---
@@ -140,9 +156,9 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 | `资质证书.jpg` | `certifications.jpg` | About |
 | `商标logo with 公司全称.jpg` | `logo-full.jpg` | About |
 | `logo avatar.jpg` | `logo-avatar.jpg` | unused |
-| `产品-方格面料.jpg` | `product-square-grid.jpg` | Products |
-| `产品-方块格棉布.jpg` | `product-block-check.jpg` | Products |
-| `产品-威化棉十字罗纹.jpg` | `product-waffle-rib.jpg` | Products |
-| `产品-提花弹力罗纹布.jpg` | `product-jacquard-rib.jpg` | Products |
+| `others/主营产品/华夫格.png` | `product-waffle.png` | Home + Products |
+| `others/主营产品/坑条罗纹.png` | `product-rib.png` | Home + Products |
+| `others/主营产品/针织提花.png` | `product-jacquard.png` | Home + Products |
+| `others/主营产品/单面.png` | `product-single-jersey.png` | Home + Products |
 | `others/首页简介配图.png` | `home-intro.png` | Home company intro section |
 | `others/favicon.png` | `public/favicon.png` | Browser tab + Nav icon |
