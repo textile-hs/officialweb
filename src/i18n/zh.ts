@@ -12,7 +12,7 @@ const zh: Translations = {
   footer: {
     address: '广东省佛山市禅城区兴业一路49号古生兴业园3座701',
     email: 'inquiry@hongstex.shop',
-    phone: '+86-XXX-XXXX-XXXX',
+    phone: '+86 180 2275 6346',
     copyright: '© 2026 佛山市鸿尚纺织有限公司',
   },
   home: {
