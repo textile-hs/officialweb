@@ -149,7 +149,7 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 - **GSC indexing status**: Check「覆盖率」in GSC dashboard after Google's first crawl (typically a few days to 2 weeks after sitemap submission)
 - **Product structured data**: `ItemList` / `Product` schema on products page — not yet implemented
-- **Baidu Search Console**: Not yet submitted — relevant if targeting mainland China traffic
+- **Baidu Search Console**: On hold — requires company registration info and infrastructure (ICP licence etc.) to be in place before submission can proceed. Code is ready: `baiduVerification` prop slot exists in `Layout.astro`, meta keywords added to all pages. When ready: go to ziyuan.baidu.com, verify via HTML tag, submit `https://www.hongstex.shop/sitemap-index.xml`
 - `办公室.jpg` in `others/` — reserved for future "office/team" section
 
 ---
