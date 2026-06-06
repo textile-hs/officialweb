@@ -18,10 +18,11 @@ interface Props {
   transparentNav?: boolean;
   keywords?: string;
   gscVerification?: string;
+  bingVerification?: string;
   baiduVerification?: string;
 }
 
-const { t, lang, title, description, canonicalUrl, alternateUrl, transparentNav = false, keywords, gscVerification, baiduVerification } = Astro.props;
+const { t, lang, title, description, canonicalUrl, alternateUrl, transparentNav = false, keywords, gscVerification, bingVerification, baiduVerification } = Astro.props;
 const ogLocale: Record<string, string> = { zh: 'zh_CN', en: 'en_US' };
 const ogImage = 'https://www.hongstex.shop/og-image.png';
 
@@ -70,6 +71,7 @@ const xDefault = new URL('/zh/', Astro.site).href;
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
     {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
     {baiduVerification && <meta name="baidu-site-verification" content={baiduVerification} />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang={bcp47[lang]} href={canonicalUrl} />
