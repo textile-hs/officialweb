@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import t from '../../i18n/en';
 import { Image } from 'astro:assets';
 import introImg from '../../assets/images/about-intro.jpg';
+import officeImg from '../../assets/images/office.jpg';
 import certsImg from '../../assets/images/certifications.jpg';
 import logoImg from '../../assets/images/logo-full.jpg';
 ---
@@ -17,7 +18,10 @@ import logoImg from '../../assets/images/logo-full.jpg';
   alternateUrl="https://www.hongstex.shop/zh/about/"
   keywords="Hongshang Textile,Foshan textile company,knitted fabric manufacturer,Zhangcha textile"
 >
-  <section class="py-14 bg-[#f8f8f8] border-b border-gray-200">
+  <section class="-mt-16">
+    <Image src={officeImg} alt="Hongshang Textile office" class="w-full h-auto block" width={1706} height={1279} />
+  </section>
+  <section class="py-10 bg-[#f8f8f8] border-b border-gray-200">
     <div class="max-w-content mx-auto px-6">
       <h1 class="text-4xl font-bold text-primary">{t.about.pageTitle}</h1>
     </div>
