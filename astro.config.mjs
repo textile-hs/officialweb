@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://hongstex.shop',
+  site: 'https://www.hongstex.shop',
   output: 'static',
   trailingSlash: 'always',
   integrations: [
