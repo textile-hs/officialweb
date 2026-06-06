@@ -145,11 +145,17 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 - **robots.txt**: Cloudflare prepends its managed block to `public/robots.txt` — cannot be fully overridden from code. `Googlebot` remains `Allow: /` so indexing is unaffected. Our `Sitemap:` directive appears at the end and is valid.
 - **Response time**: ~2.5–3s measured from US nodes, likely due to Google Fonts external load. Does not affect Cloudflare edge caching for end users.
 
-### Pending
+### Status
 
-- **GSC indexing status**: Check「覆盖率」in GSC dashboard after Google's first crawl (typically a few days to 2 weeks after sitemap submission)
-- **Product structured data**: `ItemList` / `Product` schema on products page — not yet implemented
-- **Baidu Search Console**: On hold — requires company registration info and infrastructure (ICP licence etc.) to be in place before submission can proceed. Code is ready: `baiduVerification` prop slot exists in `Layout.astro`, meta keywords added to all pages. When ready: go to ziyuan.baidu.com, verify via HTML tag, submit `https://www.hongstex.shop/sitemap-index.xml`
+- Brand keyword "鸿尚纺织" ranks #1 on Google ✓
+- Generic keywords (华夫格面料, 坑条罗纹, 针织提花 etc.) will improve gradually as Google re-crawls updated meta descriptions and keywords
+
+### Pending / Possible Next Steps
+
+- **Individual product detail pages** — one page per product (华夫格/坑条罗纹/针织提花/单面) with full content, specs, and process info. Highest SEO value for long-tail keywords like "华夫格面料定制", "坑条罗纹布批发". Evaluate when ready to invest in content.
+- **Product structured data**: `ItemList` / `Product` JSON-LD schema on products page
+- **Baidu Search Console**: On hold — requires company registration info and infrastructure (ICP licence etc.) to be in place. Code ready: `baiduVerification` prop slot in `Layout.astro`, meta keywords on all pages. When ready: ziyuan.baidu.com → verify via HTML tag → submit `https://www.hongstex.shop/sitemap-index.xml`
+- **GSC coverage report**: Check「覆盖率」in GSC dashboard to monitor indexing progress
 - `办公室.jpg` in `others/` — reserved for future "office/team" section
 
 ---
