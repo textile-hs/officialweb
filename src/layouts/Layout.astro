@@ -12,9 +12,41 @@ interface Props {
   canonicalUrl: string;
   alternateUrl: string;
   transparentNav?: boolean;
+  gscVerification?: string;
 }
 
-const { t, lang, title, description, canonicalUrl, alternateUrl, transparentNav = false } = Astro.props;
+const { t, lang, title, description, canonicalUrl, alternateUrl, transparentNav = false, gscVerification } = Astro.props;
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "佛山市鸿尚纺织有限公司",
+  "alternateName": "Foshan Hongshang Textile Co., Ltd.",
+  "url": "https://www.hongstex.shop",
+  "logo": "https://www.hongstex.shop/favicon.png",
+  "foundingDate": "2005",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "兴业一路49号古生兴业园3座701",
+    "addressLocality": "佛山市禅城区",
+    "addressRegion": "广东省",
+    "postalCode": "528000",
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+86-18022756346",
+    "email": "inquiry@hongstex.shop",
+    "contactType": "sales",
+    "availableLanguage": ["Chinese", "English"]
+  },
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "minValue": 51,
+    "maxValue": 100
+  },
+  "description": "专业针织面料研发、生产、定制。主营华夫格、坑条罗纹、针织提花、单面等系列，支持OEM/ODM，客户遍及海内外。"
+};
 const alternateLang = lang === 'zh' ? 'en' : 'zh';
 const bcp47: Record<string, string> = { zh: 'zh-CN', en: 'en-US' };
 const xDefault = new URL('/zh/', Astro.site).href;
@@ -32,6 +64,8 @@ const xDefault = new URL('/zh/', Astro.site).href;
     <link rel="alternate" hreflang={bcp47[lang]} href={canonicalUrl} />
     <link rel="alternate" hreflang={bcp47[alternateLang]} href={alternateUrl} />
     <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
