@@ -126,10 +126,31 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 
 ---
 
-## Pending
+## SEO
 
-- `办公室.jpg` in `others/` — office scene, no suitable slot in current factory page layout. Reserved for future "office/team" section if needed.
-- **SEO**: next planned work — keyword research, meta optimisation, structured data, etc.
+### Completed
+
+| Item | Detail |
+|------|--------|
+| Organization JSON-LD | All pages via `Layout.astro` — name, address, phone, email, founding year, employee count |
+| Open Graph + Twitter Card | All pages — title, description, image (`/og-image.png` 1681×935), locale |
+| robots.txt | `public/robots.txt` — `Allow: /` + `Sitemap:` directive (Cloudflare prepends their managed block, but Googlebot is unaffected) |
+| Sitemap | `@astrojs/sitemap` generates `sitemap-index.xml` → `sitemap-0.xml`, 10 pages, with hreflang alternates |
+| Canonical URLs | All pages use `https://www.hongstex.shop/` (with www), consistent with `astro.config.mjs` `site` value |
+| hreflang | `zh-CN` / `en-US` / `x-default` on every page |
+| Google Search Console | DNS TXT verification record in place (`google-site-verification=JS6RxS6zkwwgcHlhuU8unsEs_bfh2MveGz2GsfFZwZc`), sitemap submitted at `https://www.hongstex.shop/sitemap-index.xml` |
+
+### Known Issues
+
+- **robots.txt**: Cloudflare prepends its managed block to `public/robots.txt` — cannot be fully overridden from code. `Googlebot` remains `Allow: /` so indexing is unaffected. Our `Sitemap:` directive appears at the end and is valid.
+- **Response time**: ~2.5–3s measured from US nodes, likely due to Google Fonts external load. Does not affect Cloudflare edge caching for end users.
+
+### Pending
+
+- **GSC indexing status**: Check「覆盖率」in GSC dashboard after Google's first crawl (typically a few days to 2 weeks after sitemap submission)
+- **Product structured data**: `ItemList` / `Product` schema on products page — not yet implemented
+- **Baidu Search Console**: Not yet submitted — relevant if targeting mainland China traffic
+- `办公室.jpg` in `others/` — reserved for future "office/team" section
 
 ---
 
