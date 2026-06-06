@@ -138,12 +138,13 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 | Sitemap | `@astrojs/sitemap` generates `sitemap-index.xml` → `sitemap-0.xml`, 10 pages, with hreflang alternates |
 | Canonical URLs | All pages use `https://www.hongstex.shop/` (with www), consistent with `astro.config.mjs` `site` value |
 | hreflang | `zh-CN` / `en-US` / `x-default` on every page |
-| Google Search Console | DNS TXT verification record in place (`google-site-verification=JS6RxS6zkwwgcHlhuU8unsEs_bfh2MveGz2GsfFZwZc`), sitemap submitted at `https://www.hongstex.shop/sitemap-index.xml` |
+| Google Search Console | ✅ DNS TXT verified, sitemap submitted, brand keyword ranks #1 |
+| Bing Webmaster Tools | ✅ Imported from GSC, `sitemap-index.xml` + `sitemap-0.xml` both submitted |
 
 ### Known Issues
 
 - **robots.txt**: Cloudflare prepends its managed block to `public/robots.txt` — cannot be fully overridden from code. `Googlebot` remains `Allow: /` so indexing is unaffected. Our `Sitemap:` directive appears at the end and is valid.
-- **Response time**: ~2.5–3s measured from US nodes, likely due to Google Fonts external load. Does not affect Cloudflare edge caching for end users.
+- **Response time**: ~2.5–3s measured from US nodes. Google Fonts dependency removed (now self-hosted via fontsource), so this likely reflects Cloudflare edge cold-start rather than font loading.
 
 ### Status
 
@@ -156,7 +157,7 @@ The Pages Function at `functions/contact.ts` is not used for email. The form JS 
 - **Product structured data**: `ItemList` / `Product` JSON-LD schema on products page
 - **Baidu Search Console**: On hold — requires company registration info and infrastructure (ICP licence etc.) to be in place. Code ready: `baiduVerification` prop slot in `Layout.astro`, meta keywords on all pages. When ready: ziyuan.baidu.com → verify via HTML tag → submit `https://www.hongstex.shop/sitemap-index.xml`
 - **GSC coverage report**: Check「覆盖率」in GSC dashboard to monitor indexing progress
-- `办公室.jpg` in `others/` — reserved for future "office/team" section
+- **Google Sites impersonation**: A Google Sites page at `https://sites.google.com/view/hongshangtextile/` exists under the company name but with a former employee's contact details, directing enquiries away from the company. Account unknown — cannot be recovered directly. Options: (1) contact former employee to request takedown; (2) report to Google via "Report abuse" → Impersonation on the page; (3) trademark complaint if 鸿尚纺织/Hongshang Textile is registered.
 
 ---
 
