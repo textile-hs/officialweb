@@ -12,7 +12,7 @@ const en: Translations = {
   footer: {
     address: 'Room 701, Bldg 3, Gusheng Industrial Park, No.49 Xingye 1st Rd, Chancheng, Foshan, Guangdong',
     email: 'inquiry@hongstex.shop',
-    phone: '+86 180 2275 6346',
+    phone: '+86 189 2421 8263',
     copyright: '© 2026 Foshan Hongshang Textile Co., Ltd.',
   },
   home: {
